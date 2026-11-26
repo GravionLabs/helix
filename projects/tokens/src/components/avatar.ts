@@ -6,7 +6,7 @@ export const avatar = {
   root: {
     width: '2rem',
     height: '2rem',
-    fontSize: '1rem',
+    fontSize: '{fontSize.md}',
     background: '{content.border.color}',
     color: '{content.color}',
     borderRadius: '{content.border.radius}',
@@ -21,7 +21,7 @@ export const avatar = {
   lg: {
     width: '3rem',
     height: '3rem',
-    fontSize: '1.5rem',
+    fontSize: '{fontSize.2xl}',
     icon: {
       size: '1.5rem',
     },
@@ -32,7 +32,7 @@ export const avatar = {
   xl: {
     width: '4rem',
     height: '4rem',
-    fontSize: '2rem',
+    fontSize: '{fontSize.3xl}',
     icon: {
       size: '2rem',
     },

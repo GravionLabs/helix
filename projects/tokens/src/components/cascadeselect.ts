@@ -54,7 +54,7 @@ export const cascadeselect = {
   list: {
     padding: '{list.padding}',
     gap: '{list.gap}',
-    mobileIndent: '1rem',
+    mobileIndent: '{space.4}',
   },
   option: {
     focusBackground: '{list.option.focus.background}',

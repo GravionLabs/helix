@@ -12,10 +12,10 @@ export const dialog = {
   },
   header: {
     padding: '{overlay.modal.padding}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   title: {
-    fontSize: '1.25rem',
+    fontSize: '{fontSize.xl}',
     fontWeight: '600',
   },
   content: {
@@ -23,6 +23,6 @@ export const dialog = {
   },
   footer: {
     padding: '0 {overlay.modal.padding} {overlay.modal.padding} {overlay.modal.padding}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
 } satisfies TokenTree;

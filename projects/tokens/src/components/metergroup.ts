@@ -5,14 +5,14 @@ import type { TokenTree } from '../types.ts';
 export const metergroup = {
   root: {
     borderRadius: '{content.border.radius}',
-    gap: '1rem',
+    gap: '{space.4}',
   },
   meters: {
     background: '{content.border.color}',
     size: '0.5rem',
   },
   label: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   labelMarker: {
     size: '0.5rem',
@@ -21,7 +21,7 @@ export const metergroup = {
     size: '1rem',
   },
   labelList: {
-    verticalGap: '0.5rem',
-    horizontalGap: '1rem',
+    verticalGap: '{space.2}',
+    horizontalGap: '{space.4}',
   },
 } satisfies TokenTree;

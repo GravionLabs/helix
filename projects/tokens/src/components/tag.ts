@@ -4,10 +4,10 @@ import type { TokenTree } from '../types.ts';
 
 export const tag = {
   root: {
-    fontSize: '0.875rem',
+    fontSize: '{fontSize.sm}',
     fontWeight: '700',
     padding: '0.25rem 0.5rem',
-    gap: '0.25rem',
+    gap: '{space.1}',
     borderRadius: '{content.border.radius}',
     roundedBorderRadius: '{border.radius.xl}',
   },

@@ -6,7 +6,7 @@ export const inlinemessage = {
   root: {
     padding: '{form.field.padding.y} {form.field.padding.x}',
     borderRadius: '{content.border.radius}',
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   text: {
     fontWeight: '500',

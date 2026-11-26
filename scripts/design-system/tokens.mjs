@@ -188,11 +188,19 @@ export function shellConstants(css = fs.readFileSync(path.join(ROOT, 'projects/s
 const px = (rem, base = 14) => `${Number((Number.parseFloat(rem) * base).toFixed(2))}px`;
 const toPx = (v) => (String(v).endsWith('rem') ? px(v) : v);
 
+/** The steps of the type scale and the spacing scale (ADR 0009), as the preset names them. */
+export const FONT_SIZE_STEPS = ['xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl'];
+export const SPACE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8];
+
 export function buildSpacing(tokens, shell = shellConstants()) {
   const { literal } = createResolver(tokens);
   const L = (prop) => literal(prop, 'light');
   return {
     tokens: [
+      ...SPACE_STEPS.map((step) => {
+        const rem = L(`--h-space-${step}`);
+        return { name: `space-${step}`, value: rem && toPx(rem), usage: `Spacing step ${step}: --h-space-${step} (${rem}), for padding, gaps and margins.` };
+      }),
       { name: 'field-padding-x', value: toPx(L('--h-form-field-padding-x')), usage: 'Horizontal padding of inputs and buttons.' },
       { name: 'field-padding-y', value: toPx(L('--h-form-field-padding-y')), usage: 'Vertical padding of inputs and buttons.' },
       { name: 'list-gap', value: L('--h-list-gap'), usage: 'Gap between options in lists and menus.' },
@@ -240,6 +248,14 @@ export function buildType(tokens) {
       mono: 'ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace',
     },
     groups: [
+      {
+        name: 'Type scale',
+        family: 'sans',
+        styles: FONT_SIZE_STEPS.flatMap((step) => {
+          const rem = literal(`--h-font-size-${step}`, 'light');
+          return rem ? [style(`font-size-${step}`, toPx(rem), 1.4, 400, { usage: `--h-font-size-${step} (${rem}): use the token, never a px size.` })] : [];
+        }),
+      },
       {
         name: 'Display',
         family: 'sans',

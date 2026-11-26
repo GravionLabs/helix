@@ -8,7 +8,7 @@ export const menubar = {
     borderColor: '{content.border.color}',
     borderRadius: '{content.border.radius}',
     color: '{content.color}',
-    gap: '0.5rem',
+    gap: '{space.2}',
     padding: '0.5rem 0.75rem',
     transitionDuration: '{transition.duration}',
   },
@@ -38,7 +38,7 @@ export const menubar = {
     borderColor: '{content.border.color}',
     borderRadius: '{content.border.radius}',
     shadow: '{overlay.navigation.shadow}',
-    mobileIndent: '1rem',
+    mobileIndent: '{space.4}',
     icon: {
       size: '{navigation.submenu.icon.size}',
       color: '{navigation.submenu.icon.color}',

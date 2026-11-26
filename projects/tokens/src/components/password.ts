@@ -20,7 +20,7 @@ export const password = {
     shadow: '{overlay.popover.shadow}',
   },
   content: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
   colorScheme: {
     light: {

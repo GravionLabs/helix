@@ -8,7 +8,7 @@ export const toolbar = {
     borderColor: '{content.border.color}',
     borderRadius: '{content.border.radius}',
     color: '{content.color}',
-    gap: '0.5rem',
-    padding: '0.75rem',
+    gap: '{space.2}',
+    padding: '{space.3}',
   },
 } satisfies TokenTree;

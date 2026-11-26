@@ -4,7 +4,7 @@ import type { TokenTree } from '../types.ts';
 
 export const speeddial = {
   root: {
-    gap: '0.5rem',
+    gap: '{space.2}',
     transitionDuration: '{transition.duration}',
   },
 } satisfies TokenTree;

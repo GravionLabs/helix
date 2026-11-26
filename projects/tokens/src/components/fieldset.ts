@@ -20,7 +20,7 @@ export const fieldset = {
     borderWidth: '1px',
     borderColor: 'transparent',
     padding: '0.5rem 0.75rem',
-    gap: '0.5rem',
+    gap: '{space.2}',
     fontWeight: '600',
     focusRing: {
       width: '{focus.ring.width}',

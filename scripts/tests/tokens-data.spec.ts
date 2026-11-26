@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { helixTokens, palettes } from '../../projects/tokens/src/index.ts';
 import { TOKEN_COMPONENTS } from '../build-ui-css.mjs';
 import { auraPrimitive, mute, SCALES } from '../helix-palettes.mjs';
+import { resolveTokens } from '../tokens/resolve.mjs';
 
 const ROOT = resolve(__dirname, '../..');
 const SRC = join(ROOT, 'projects/tokens/src');
@@ -89,6 +90,80 @@ describe('token data (projects/tokens)', () => {
       }
     }
     expect([...missing].sort()).toEqual([]);
+  });
+});
+
+/** The scales of ADR 0009, as written there. */
+const FONT_SIZES = {
+  xs: '0.75rem',
+  sm: '0.875rem',
+  md: '1rem',
+  lg: '1.125rem',
+  xl: '1.25rem',
+  '2xl': '1.5rem',
+  '3xl': '2rem',
+};
+const SPACES = {
+  1: '0.25rem',
+  2: '0.5rem',
+  3: '0.75rem',
+  4: '1rem',
+  5: '1.25rem',
+  6: '1.5rem',
+  7: '1.75rem',
+  8: '2rem',
+};
+
+describe('type scale and spacing (ADR 0009)', () => {
+  const semantic = helixTokens.semantic as Tree;
+
+  it('are in the semantic layer with the values of the ADR', () => {
+    expect(semantic.fontSize).toEqual(FONT_SIZES);
+    expect(semantic.space).toEqual(SPACES);
+  });
+
+  it('are referenced by every font size and spacing token that equals a step', () => {
+    const rem = (value: string) => Number.parseFloat(value);
+    const fontSteps = Object.values(FONT_SIZES).map(rem);
+    const spaceSteps = Object.values(SPACES).map(rem);
+    const written: string[] = [];
+    for (const tree of [semantic, helixTokens.components as unknown as Tree]) {
+      for (const [path, value] of leaves(tree)) {
+        // the scales themselves are where the literals live
+        if (tree === semantic && (path[0] === 'fontSize' || path[0] === 'space')) continue;
+        const key = path.at(-1) ?? '';
+        const steps = /fontSize$/i.test(key)
+          ? fontSteps
+          : /^(padding(X|Y|Top|Right|Bottom|Left)?|gap|\w+Gap|indent|mobileIndent|gutter)$/.test(
+                key,
+              )
+            ? spaceSteps
+            : [];
+        if (/^\d*\.?\d+rem$/.test(String(value)) && steps.includes(rem(String(value)))) {
+          written.push(`${path.join('.')}: ${value}`);
+        }
+      }
+    }
+    expect(written).toEqual([]);
+  });
+
+  it('leave the resolved value of every token that now references them unchanged', () => {
+    // the values these variables had before they referenced a step
+    const before: Record<string, string> = JSON.parse(
+      readFileSync(join(ROOT, 'scripts/tests/fixtures/tokens-before-scale.json'), 'utf8'),
+    );
+    const { light } = resolveTokens(helixTokens).json;
+    const literal = (value: string): string => {
+      const ref = /^var\((--[\w-]+)\)$/.exec(value);
+      return ref ? literal(light[ref[1]]) : value;
+    };
+    expect(Object.keys(before).length).toBeGreaterThan(100);
+    for (const [name, value] of Object.entries(before)) {
+      expect(light[name], name).toMatch(/^var\(--h-(font-size|space)-\w+\)$/);
+      // a number comparison: `.5rem` and `0.5rem` are the same length
+      expect(literal(light[name]), name).toMatch(/rem$/);
+      expect(Number.parseFloat(literal(light[name])), name).toBe(Number.parseFloat(value));
+    }
   });
 });
 

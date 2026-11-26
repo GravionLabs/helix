@@ -7,6 +7,6 @@ export const orderlist = {
     gap: '1.125rem',
   },
   controls: {
-    gap: '0.5rem',
+    gap: '{space.2}',
   },
 } satisfies TokenTree;
