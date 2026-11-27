@@ -35,7 +35,9 @@ ref.closed.subscribe((result) => console.log(result));
 
 ## Sizes
 
-Pick the class by what the dialog holds; the dialog never grows beyond the screen and the content scrolls.
+The default is `md`: an `hx-dialog` without `size` and `width` is `32rem` wide, not the width of its content. Apps
+should pick a size for every dialog and set `size` explicitly, by what the dialog holds (a [service](#service) dialog
+has no `size`: give it a `width`). The dialog never grows beyond the screen and the content scrolls.
 
 | `size` | Token                 | Value   | Content                                   |
 | ------ | --------------------- | ------- | ----------------------------------------- |
