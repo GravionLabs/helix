@@ -102,6 +102,9 @@ async cancel(): Promise<void> {
 - Every question sets `acceptLabel` to the verb of the action and `rejectLabel` to "Cancel" or to what rejecting
   does ("Keep editing"). The defaults "Yes" and "No" are not used.
 - A destructive question sets `acceptSeverity: 'danger'`.
+- A destructive question with an option ("force", "also remove the volumes") is a confirmation with the option as its
+  [`content`](../components/confirm.md#remove-with-an-option) template, never a panel the app builds. The option is
+  off when the question opens.
 
 ## Service dialogs
 
