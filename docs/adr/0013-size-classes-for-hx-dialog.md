@@ -1,6 +1,6 @@
 # ADR 0013: Size classes for hx-dialog
 
-- Status: Proposed
+- Status: Accepted
 - Date: 2026-11-26
 - Issues: #1230
 
