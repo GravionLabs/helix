@@ -23,6 +23,10 @@
   margin: 0;
 }
 
+.hx-confirm-extra {
+  margin-block-start: var(--h-confirmdialog-content-gap);
+}
+
 .hx-popover.hx-confirm-popup {
   margin-block-start: var(--h-confirmpopup-gutter);
   border-color: var(--h-confirmpopup-border-color);
@@ -61,6 +65,11 @@
   flex: none;
   color: var(--h-confirmpopup-icon-color);
   font-size: var(--h-confirmpopup-icon-size);
+}
+
+.hx-confirm-popup-extra {
+  padding: var(--h-confirmpopup-content-padding);
+  padding-block-start: 0;
 }
 
 .hx-confirm-popup-footer {

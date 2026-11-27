@@ -1,5 +1,7 @@
 import { Dialog, type DialogRef } from '@angular/cdk/dialog';
+import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { Overlay } from '@angular/cdk/overlay';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,6 +23,11 @@ import { HxPopover } from '../popover/popover';
 /** One question for the user. */
 export interface HxConfirmation {
   message: string;
+  /**
+   * Controls that belong to the question, e.g. a checkbox for an option, shown between the message and the buttons. The
+   * template gets no context: the caller owns its state and reads it in `accept` or after `confirmAsync` resolved.
+   */
+  content?: TemplateRef<unknown>;
   /** Title of a confirm dialog. */
   header?: string;
   /** CSS classes of an icon font, e.g. `pi pi-exclamation-triangle`. */
@@ -84,12 +91,13 @@ const targetOf = (target: Element | Event | null | undefined): Element | null =>
 
 /**
  * Shows the questions of `HxConfirmationService.confirm` that have no `target` as a centred modal
- * `role="alertdialog"`: the message describes it, the focus starts on the reject button, Escape rejects. Questions that
+ * `role="alertdialog"`: the message describes it, the focus starts on the reject button, Escape rejects. A `content`
+ * template is shown between the message and the buttons. Questions that
  * arrive while one is open wait their turn. Clicking the mask does nothing: the user must answer.
  */
 @Component({
   selector: 'hx-confirm-dialog',
-  imports: [HxDialogFrame, HxButton],
+  imports: [HxDialogFrame, HxButton, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-confirm-anchor' },
   templateUrl: './confirm-dialog.html',
@@ -168,11 +176,11 @@ export class HxConfirmDialog {
 /**
  * Shows the questions of `HxConfirmationService.confirm` that have a `target` in a popup anchored to it, as a
  * `role="alertdialog"` with the message as its description. The focus starts on the reject button; Escape and a click
- * outside reject.
+ * outside reject. With `content`, Tab stays in the popup, so that it reaches the projected controls from the reject button.
  */
 @Component({
   selector: 'hx-confirm-popup',
-  imports: [HxPopover, HxButton],
+  imports: [HxPopover, HxButton, NgTemplateOutlet, CdkTrapFocus],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'hx-confirm-anchor' },
   templateUrl: './confirm-popup.html',

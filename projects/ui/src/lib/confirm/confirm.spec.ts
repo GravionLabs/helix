@@ -1,17 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, signal, type TemplateRef, viewChild } from '@angular/core';
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
+import { HxCheckbox } from '../checkbox/checkbox';
 import { HxConfirmationService, HxConfirmDialog, HxConfirmPopup } from './confirm';
 
 @Component({
-  imports: [HxConfirmDialog, HxConfirmPopup],
+  imports: [HxConfirmDialog, HxConfirmPopup, HxCheckbox],
   template: `
     <button id="anchor" type="button">Delete</button>
     <button id="other" type="button">Other</button>
     <hx-confirm-dialog />
     <hx-confirm-popup />
+    <ng-template #option>
+      <label>
+        <input
+          id="force"
+          type="checkbox"
+          hx-checkbox
+          [checked]="force()"
+          (change)="force.set(!force())"
+        />
+        Force removal
+      </label>
+    </ng-template>
   `,
 })
-class Host {}
+class Host {
+  readonly force = signal(false);
+  readonly option = viewChild.required<TemplateRef<unknown>>('option');
+}
 
 describe('HxConfirmationService with the dialog and the popup', () => {
   let fixture: ComponentFixture<Host>;
@@ -142,7 +158,87 @@ describe('HxConfirmationService with the dialog and the popup', () => {
     });
   });
 
+  describe.each([
+    { kind: 'dialog', root: () => container(), extra: () => ({}), prefix: 'hx-confirm' },
+    {
+      kind: 'popup',
+      root: () => popup(),
+      extra: () => ({ target: anchor() }),
+      prefix: 'hx-confirm-popup',
+    },
+  ])('content in the $kind', ({ root, extra, prefix }) => {
+    const checkbox = () => document.querySelector('#force') as HTMLInputElement;
+    const host = () => fixture.componentInstance as Host;
+    const askWithOption = (more = {}) => ask({ content: host().option(), ...extra(), ...more });
+    const visible = () =>
+      vi
+        .spyOn(HTMLElement.prototype, 'getClientRects')
+        .mockReturnValue([{}] as unknown as DOMRectList);
+
+    it('renders it between the message and the buttons; the message stays the description', async () => {
+      askWithOption();
+      await settle();
+      const message = root()?.querySelector(`.${prefix}-message`) as HTMLElement;
+      const follows = (a: Node, b: Node) =>
+        !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+      expect(root()?.contains(checkbox())).toBe(true);
+      expect(follows(message, checkbox())).toBe(true);
+      expect(follows(checkbox(), button('hx-confirm-reject') as HTMLElement)).toBe(true);
+      expect(root()?.getAttribute('aria-describedby')).toBe(message.id);
+    });
+
+    it('a checkbox in it toggles and its value is readable in accept', async () => {
+      let forced: boolean | undefined;
+      askWithOption({ accept: () => (forced = host().force()) });
+      await settle();
+      checkbox().click();
+      await settle();
+      expect(checkbox().checked).toBe(true);
+      button('hx-confirm-accept')?.click();
+      await settle();
+      expect(forced).toBe(true);
+      expect(checkbox()).toBeNull();
+    });
+
+    it('starts the focus on the reject button and keeps Tab inside', async () => {
+      visible();
+      askWithOption();
+      await settle();
+      expect(document.activeElement).toBe(button('hx-confirm-reject'));
+      // the tab stops of the focus trap, which wrap Tab around to the content
+      const anchors = document.querySelectorAll('.cdk-focus-trap-anchor[tabindex="0"]');
+      expect(anchors).toHaveLength(2);
+      expect(checkbox().tabIndex).toBe(0);
+    });
+
+    it('Enter in it does not answer, Escape rejects', async () => {
+      askWithOption();
+      await settle();
+      checkbox().focus();
+      checkbox().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      await settle();
+      expect(log).toEqual([]);
+      expect(root()).toBeTruthy();
+      pressEscape();
+      await settle();
+      expect(log).toEqual(['reject']);
+      expect(root()).toBeNull();
+    });
+
+    it('renders nothing extra without content', async () => {
+      ask(extra());
+      await settle();
+      expect(root()?.querySelector('[class$="-extra"]')).toBeNull();
+    });
+  });
+
   describe('popup', () => {
+    it('does not trap the focus without content', async () => {
+      ask({ target: anchor() });
+      await settle();
+      expect(document.querySelectorAll('.cdk-focus-trap-anchor[tabindex="0"]')).toHaveLength(0);
+    });
+
     it('asks next to the target in an alertdialog described by the message', async () => {
       ask({ target: anchor(), icon: 'pi pi-question' });
       await settle();

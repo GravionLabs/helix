@@ -29,7 +29,7 @@ import {
  *
  * `toggle(event, target?)`, `show(event, target?)` and `hide()` open it below the element of the event (or `target`),
  * or above when there is no room. An outside click and Escape close it. It is a non-modal `role="dialog"`: the focus
- * moves to its first control when it has one and returns to the element that opened it when it closes, and the page
+ * moves to the element with `cdkFocusInitial`, else to its first control when it has one, and returns to the element that opened it when it closes, and the page
  * behind stays reachable. Name it with `ariaLabel` or `ariaLabelledBy`, and put `aria-haspopup="dialog"` on the
  * trigger. Projected content is created with the popover, only shown while it is open.
  */
@@ -104,9 +104,12 @@ export class HxPopover {
   protected onAttach(): void {
     afterNextRender(
       () => {
-        const first = this.panel()?.nativeElement.querySelector<HTMLElement>(
-          'a[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        );
+        const panel = this.panel()?.nativeElement;
+        const first =
+          panel?.querySelector<HTMLElement>('[cdkFocusInitial]') ??
+          panel?.querySelector<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not(.cdk-focus-trap-anchor)',
+          );
         first?.focus();
       },
       { injector: this.#injector },

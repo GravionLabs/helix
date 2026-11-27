@@ -7,34 +7,42 @@
   (hidden)="onHidden()"
 >
   @if (current(); as c) {
-    <div class="hx-confirm-popup-content">
-      @if (c.icon) {
-        <span class="hx-confirm-popup-icon" [class]="c.icon" aria-hidden="true"></span>
+    <div class="hx-confirm-popup-body" [cdkTrapFocus]="!!c.content">
+      <div class="hx-confirm-popup-content">
+        @if (c.icon) {
+          <span class="hx-confirm-popup-icon" [class]="c.icon" aria-hidden="true"></span>
+        }
+        <span class="hx-confirm-popup-message" [id]="messageId">{{ c.message }}</span>
+      </div>
+      @if (c.content) {
+        <div class="hx-confirm-popup-extra">
+          <ng-container [ngTemplateOutlet]="c.content" />
+        </div>
       }
-      <span class="hx-confirm-popup-message" [id]="messageId">{{ c.message }}</span>
-    </div>
-    <div class="hx-confirm-popup-footer">
-      <button
-        hx-button
-        type="button"
-        variant="text"
-        severity="secondary"
-        size="small"
-        class="hx-confirm-reject"
-        (click)="answer(false)"
-      >
-        {{ c.rejectLabel ?? 'No' }}
-      </button>
-      <button
-        hx-button
-        type="button"
-        size="small"
-        class="hx-confirm-accept"
-        [severity]="c.acceptSeverity ?? 'primary'"
-        (click)="answer(true)"
-      >
-        {{ c.acceptLabel ?? 'Yes' }}
-      </button>
+      <div class="hx-confirm-popup-footer">
+        <button
+          hx-button
+          type="button"
+          variant="text"
+          severity="secondary"
+          size="small"
+          class="hx-confirm-reject"
+          cdkFocusInitial
+          (click)="answer(false)"
+        >
+          {{ c.rejectLabel ?? 'No' }}
+        </button>
+        <button
+          hx-button
+          type="button"
+          size="small"
+          class="hx-confirm-accept"
+          [severity]="c.acceptSeverity ?? 'primary'"
+          (click)="answer(true)"
+        >
+          {{ c.acceptLabel ?? 'Yes' }}
+        </button>
+      </div>
     </div>
   }
 </hx-popover>

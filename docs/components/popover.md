@@ -19,8 +19,8 @@
 `toggle(event, target?)`, `show(event, target?)` and `hide()` control it; it opens below the element of the event (or
 `target`) and above it when there is no room, the arrow follows. `open` is a signal.
 
-- **Accessibility:** a non-modal `role="dialog"`, so the page behind stays reachable. The focus moves to its first
-  control when it has one, and returns to the element that opened it on Escape and on `hide()`; an outside click leaves
+- **Accessibility:** a non-modal `role="dialog"`, so the page behind stays reachable. The focus moves to the element
+  with `cdkFocusInitial`, else to its first control when it has one, and returns to the element that opened it on Escape and on `hide()`; an outside click leaves
   the focus where the user clicked. Put `aria-haspopup="dialog"` on the trigger. For a hint on hover use
   [`hx-tooltip`](tooltip.md); for a modal choice use [`hx-dialog`](dialog.md).
 - The projected content is created together with the popover and only shown while it is open.

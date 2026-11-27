@@ -7,6 +7,11 @@
         }
         <p class="hx-confirm-message" [id]="messageId">{{ c.message }}</p>
       </div>
+      @if (c.content) {
+        <div class="hx-confirm-extra">
+          <ng-container [ngTemplateOutlet]="c.content" />
+        </div>
+      }
       <ng-container ngProjectAs="[hxDialogFooter]">
         <button
           hx-button
