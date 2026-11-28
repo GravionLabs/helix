@@ -19,8 +19,8 @@
       "source": "GravionLabs/skills",
       "sourceType": "github",
       "skillPath": "skills/ng/ng-implementation/SKILL.md",
-      "computedHash": "bec2df8813bced37a441339125472de8a595b89e24f25bd9f1ad381520931adc",
-      "commit": "9b7fc4d772046f51878cfb874eb4a20eb9d32413"
+      "computedHash": "47fdc15829e4ae6a4dac035906d1be7aff2950cf37ef58837cbbe59a92f4329b",
+      "commit": "c0325be2338d69e7a26d293012918aa1a9c0e213"
     },
     "ng-test": {
       "source": "GravionLabs/skills",
